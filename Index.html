@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)file:///Users/germaniribas/Downloads/ux-writing-guide-v2.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de UX Writing — Humand</title>
+<link href="./Guía de UX Writing — Humand_files/css2" rel="stylesheet">
+<style>
+/* ── TOKENS ── */
+:root {
+  --text-default:      #303036;
+  --text-lighter:      #636271;
+  --brand-400:         #6f93eb;
+  --brand-100:         #eff2ff;
+  --brand-800:         #213478;
+  --bg-layout:         #f5f6f8;
+  --bg-white:          #ffffff;
+  --success-100:       #edfaf3;
+  --success-700:       #1a7a45;
+  --error-100:         #fff0f0;
+  --error-700:         #c0392b;
+  --warning-100:       #fffbeb;
+  --warning-700:       #b45309;
+  --info-100:          #eff6ff;
+  --info-700:          #1d4ed8;
+  --neutral-100:       #f5f6f8;
+  --neutral-200:       #ebebf0;
+  --neutral-300:       #d1d1db;
+  --neutral-500:       #9898aa;
+  --border:            #e2e2eb;
+  --shadow-card:       -1px 4px 8px 0px rgba(233,233,244,1);
+  --shadow-lifted:     -1px 8px 16px 0px rgba(170,170,186,0.45);
+  --font:              'Roboto', sans-serif;
+  --sp1: 4px; --sp2: 8px; --sp3: 12px; --sp4: 16px;
+  --sp5: 24px; --sp6: 32px; --sp7: 40px; --sp8: 64px;
+  --r-s: 4px; --r-m: 8px; --r-l: 16px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);font-size:14px;line-height:1.4;letter-spacing:0.2px;color:var(--text-default);background:var(--bg-layout);min-height:100vh}
+a{color:var(--brand-800);text-decoration:underline}
+
+/* ── LAYOUT ── */
+.app{max-width:980px;margin:0 auto;padding:var(--sp5)}
+
+/* ── HEADER ── */
+.header{background:var(--brand-800);border-radius:var(--r-l);padding:var(--sp7) var(--sp8);margin-bottom:var(--sp5);position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:-50px;right:-30px;width:260px;height:260px;border-radius:50%;background:rgba(111,147,235,0.12)}
+.header::after{content:'';position:absolute;bottom:-70px;left:80px;width:180px;height:180px;border-radius:50%;background:rgba(111,147,235,0.08)}
+.h-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--brand-400);background:rgba(111,147,235,0.18);padding:3px 10px;border-radius:var(--r-s);margin-bottom:var(--sp3)}
+.header h1{font-size:36px;font-weight:600;color:#fff;line-height:1.3;margin-bottom:var(--sp3);position:relative;z-index:1}
+.header p{font-size:16px;color:rgba(255,255,255,0.72);max-width:540px;line-height:1.5;position:relative;z-index:1}
+.h-meta{display:flex;flex-wrap:wrap;gap:var(--sp5);margin-top:var(--sp5);position:relative;z-index:1}
+.h-meta span{font-size:12px;color:rgba(255,255,255,0.5)}
+.h-meta strong{color:rgba(255,255,255,0.82);font-weight:600}
+
+/* ── TABS NAV ── */
+.tabs-nav{display:flex;gap:var(--sp1);background:var(--bg-white);border-radius:var(--r-m);padding:var(--sp1);margin-bottom:var(--sp5);box-shadow:var(--shadow-card);overflow-x:auto;scrollbar-width:none}
+.tabs-nav::-webkit-scrollbar{display:none}
+.tab-btn{flex-shrink:0;font-family:var(--font);font-size:12px;font-weight:600;letter-spacing:0.2px;color:var(--text-lighter);background:transparent;border:none;border-radius:var(--r-s);padding:var(--sp2) var(--sp4);cursor:pointer;transition:all .18s ease;white-space:nowrap;display:flex;align-items:center;gap:var(--sp2)}
+.tab-btn:hover{background:var(--neutral-100);color:var(--text-default)}
+.tab-btn.active{background:var(--brand-800);color:#fff}
+.tab-num{font-size:10px;background:rgba(255,255,255,0.2);padding:1px 6px;border-radius:99px;font-weight:600}
+.tab-btn:not(.active) .tab-num{background:var(--neutral-200);color:var(--text-lighter)}
+.tab-priority{font-size:10px;background:var(--brand-400);color:white;padding:1px 6px;border-radius:99px;font-weight:600}
+
+/* ── PANELS ── */
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── CARDS ── */
+.card{background:var(--bg-white);border-radius:var(--r-l);padding:var(--sp6);margin-bottom:var(--sp5);box-shadow:var(--shadow-card)}
+.card-sm{background:var(--bg-white);border-radius:var(--r-m);padding:var(--sp5);box-shadow:var(--shadow-card)}
+.card-flat{background:var(--neutral-100);border-radius:var(--r-m);padding:var(--sp5);border:1px solid var(--border)}
+
+/* ── TYPOGRAPHY ── */
+.sec-title{font-size:24px;font-weight:600;color:var(--text-default);margin-bottom:var(--sp2)}
+.sec-sub{font-size:16px;color:var(--text-lighter);margin-bottom:var(--sp6);line-height:1.5}
+.block-title{font-size:18px;font-weight:600;color:var(--text-default);margin-bottom:var(--sp3)}
+.block-sub{font-size:14px;font-weight:600;color:var(--text-default);margin-bottom:var(--sp3)}
+.body{font-size:14px;color:var(--text-lighter);line-height:1.5;margin-bottom:var(--sp4)}
+.label{font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--text-lighter);margin-bottom:var(--sp3);display:block}
+
+/* ── GRID ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp4)}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp4)}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp4)}
+@media(max-width:680px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+/* ── DIVIDER ── */
+.div{height:1px;background:var(--border);margin:var(--sp6) 0}
+
+/* ── CITATION BLOCK ── */
+.citation{border-left:3px solid var(--brand-400);background:var(--brand-100);border-radius:0 var(--r-m) var(--r-m) 0;padding:var(--sp4) var(--sp5);margin:var(--sp5) 0}
+.citation-text{font-size:14px;color:var(--brand-800);line-height:1.6;font-style:italic;margin-bottom:var(--sp2)}
+.citation-source{font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--brand-400)}
+
+.citation-neutral{border-left:3px solid var(--neutral-300);background:var(--neutral-100);border-radius:0 var(--r-m) var(--r-m) 0;padding:var(--sp4) var(--sp5);margin:var(--sp5) 0}
+.citation-neutral .citation-text{color:var(--text-default)}
+.citation-neutral .citation-source{color:var(--text-lighter)}
+
+/* ── PRINCIPLE CARD ── */
+.pc{background:var(--neutral-100);border-radius:var(--r-m);padding:var(--sp5);border-left:3px solid var(--brand-400)}
+.pc-num{font-size:10px;font-weight:600;color:var(--brand-400);letter-spacing:1px;text-transform:uppercase;margin-bottom:var(--sp2)}
+.pc-name{font-size:16px;font-weight:600;color:var(--text-default);margin-bottom:var(--sp2)}
+.pc-desc{font-size:14px;color:var(--text-lighter);line-height:1.5}
+
+/* ── COMPARISON ── */
+.cmp{border-radius:var(--r-m);overflow:hidden;border:1px solid var(--border);margin-top:var(--sp4)}
+.cmp-row{display:grid;grid-template-columns:28px 1fr 1fr;align-items:stretch;border-bottom:1px solid var(--border)}
+.cmp-row:last-child{border-bottom:none}
+.cmp-icon{display:flex;align-items:center;justify-content:center;font-size:12px;padding:var(--sp3) 0}
+.cmp-row.bad .cmp-icon{background:var(--error-100)}
+.cmp-row.ok  .cmp-icon{background:var(--warning-100)}
+.cmp-row.good .cmp-icon{background:var(--success-100)}
+.cmp-text{padding:var(--sp3) var(--sp4);font-size:12px;line-height:1.5;border-right:1px solid var(--border)}
+.cmp-row.bad  .cmp-text{color:var(--error-700)}
+.cmp-row.ok   .cmp-text{color:var(--warning-700)}
+.cmp-row.good .cmp-text{color:var(--success-700);font-weight:600}
+.cmp-note{padding:var(--sp3) var(--sp4);font-size:12px;color:var(--text-lighter);line-height:1.5}
+
+/* ── COMPONENT BLOCK ── */
+.comp{border:1px solid var(--border);border-radius:var(--r-m);overflow:hidden;margin-bottom:var(--sp5)}
+.comp-hd{background:var(--brand-100);padding:var(--sp3) var(--sp5);display:flex;align-items:center;gap:var(--sp3)}
+.comp-name{font-size:14px;font-weight:600;color:var(--brand-800)}
+.comp-body{padding:var(--sp5)}
+
+/* ── RULE LIST ── */
+.rlist{list-style:none;display:flex;flex-direction:column;gap:var(--sp3)}
+.rlist li{display:flex;gap:var(--sp3);align-items:flex-start;font-size:14px;color:var(--text-default);line-height:1.5}
+.rlist li::before{content:'';flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--brand-400);margin-top:6px}
+
+/* ── BA TABLE ── */
+.ba{width:100%;border-collapse:collapse}
+.ba th{font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;padding:var(--sp3) var(--sp4);text-align:left}
+.ba th:first-child{color:var(--error-700);background:var(--error-100)}
+.ba th:last-child{color:var(--success-700);background:var(--success-100)}
+.ba td{padding:var(--sp3) var(--sp4);font-size:13px;line-height:1.5;vertical-align:top;border-bottom:1px solid var(--border)}
+.ba tr:last-child td{border-bottom:none}
+.ba td:first-child{color:var(--error-700);background:#fffafa}
+.ba td:last-child{color:var(--success-700);background:#f9fffe;font-weight:600}
+
+/* ── VOZ CARD ── */
+.vc{background:var(--neutral-100);border-radius:var(--r-m);padding:var(--sp5);border:1px solid var(--border)}
+.vc-atr{font-size:18px;font-weight:600;color:var(--brand-800);margin-bottom:var(--sp2)}
+.vc-def{font-size:14px;color:var(--text-default);margin-bottom:var(--sp4);line-height:1.5}
+.vc-sn{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp3)}
+.vc-si{background:var(--success-100);border-radius:var(--r-s);padding:var(--sp3);font-size:12px;color:var(--success-700)}
+.vc-no{background:var(--error-100);border-radius:var(--r-s);padding:var(--sp3);font-size:12px;color:var(--error-700)}
+.vc-si strong,.vc-no strong{display:block;font-weight:600;margin-bottom:4px;font-size:10px;letter-spacing:.8px;text-transform:uppercase}
+
+/* ── TONO TABLE ── */
+.tono{width:100%;border-collapse:collapse}
+.tono th{font-size:10px;font-weight:600;letter-spacing:.6px;text-align:left;padding:var(--sp3) var(--sp4);background:var(--brand-100);color:var(--brand-800);border-bottom:2px solid var(--brand-400)}
+.tono td{padding:var(--sp4);font-size:12px;line-height:1.5;border-bottom:1px solid var(--border);vertical-align:top}
+.tono tr:last-child td{border-bottom:none}
+.tono tr:nth-child(even) td{background:var(--neutral-100)}
+.t-ctx{font-weight:600;color:var(--text-default);font-size:13px}
+.t-bad{color:var(--error-700)}
+.t-good{color:var(--success-700);font-weight:600}
+
+/* ── PROCESO VOZ ── */
+.step{display:grid;grid-template-columns:40px 1fr;gap:var(--sp4);padding:var(--sp5) 0;border-bottom:1px solid var(--border)}
+.step:last-child{border-bottom:none}
+.step-num{width:40px;height:40px;border-radius:50%;background:var(--brand-800);color:#fff;font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-title{font-size:14px;font-weight:600;color:var(--text-default);margin-bottom:var(--sp2)}
+.step-desc{font-size:13px;color:var(--text-lighter);line-height:1.5}
+
+/* ── MICROCOPY EXAMPLES ── */
+.mc-block{border:1px solid var(--border);border-radius:var(--r-m);overflow:hidden;margin-bottom:var(--sp4)}
+.mc-hd{background:var(--brand-100);padding:var(--sp3) var(--sp5);font-size:12px;font-weight:600;color:var(--brand-800);letter-spacing:.4px}
+.mc-body{padding:var(--sp5)}
+.mc-examples{display:flex;flex-direction:column;gap:var(--sp3)}
+.mc-item{display:grid;grid-template-columns:80px 1fr;gap:var(--sp3);align-items:start}
+.mc-ctx{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--text-lighter);padding-top:3px}
+.mc-copy{font-size:13px;color:var(--text-default);line-height:1.5;background:var(--neutral-100);border-radius:var(--r-s);padding:var(--sp2) var(--sp3)}
+.mc-copy strong{color:var(--brand-800)}
+
+/* ── BRIEF ── */
+.brief-wrap{border:1px solid var(--border);border-radius:var(--r-m);overflow:hidden}
+.brief-row{display:grid;grid-template-columns:110px 1fr;gap:0;border-bottom:1px solid var(--border)}
+.brief-row:last-child{border-bottom:none}
+.brief-key{background:var(--brand-100);padding:var(--sp4) var(--sp5);font-weight:600;font-size:14px;color:var(--brand-800);display:flex;flex-direction:column;gap:2px}
+.brief-key span{font-size:10px;font-weight:400;color:var(--brand-400)}
+.brief-val{padding:var(--sp4) var(--sp5);font-size:13px;color:var(--text-lighter);line-height:1.5}
+.brief-row.how .brief-key{background:var(--brand-800);color:#fff}
+.brief-row.how .brief-key span{color:var(--brand-400)}
+.brief-row.how .brief-val{color:var(--brand-800);font-weight:600;background:var(--brand-100)}
+
+/* ── CHECKLIST ── */
+.chk{list-style:none;display:flex;flex-direction:column;gap:var(--sp3)}
+.chk li{display:grid;grid-template-columns:24px 1fr;gap:var(--sp3);align-items:flex-start}
+.chk-ico{width:24px;height:24px;border-radius:50%;background:var(--brand-100);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.chk-lbl{font-size:14px;color:var(--text-default);font-weight:600}
+.chk-desc{font-size:12px;color:var(--text-lighter);margin-top:2px}
+
+/* ── DO DONT ── */
+.dodt{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp4)}
+@media(max-width:640px){.dodt{grid-template-columns:1fr}}
+.do-blk,.dt-blk{border-radius:var(--r-m);overflow:hidden;border:1px solid var(--border)}
+.do-hd{background:var(--success-100);padding:var(--sp3) var(--sp4);font-size:10px;font-weight:600;color:var(--success-700);letter-spacing:.8px;text-transform:uppercase}
+.dt-hd{background:var(--error-100);padding:var(--sp3) var(--sp4);font-size:10px;font-weight:600;color:var(--error-700);letter-spacing:.8px;text-transform:uppercase}
+.do-list,.dt-list{list-style:none;padding:var(--sp4);display:flex;flex-direction:column;gap:var(--sp3)}
+.do-list li,.dt-list li{font-size:13px;line-height:1.5;display:flex;gap:var(--sp2);align-items:flex-start}
+.do-list li::before{content:'✓';color:var(--success-700);font-weight:600;flex-shrink:0}
+.dt-list li::before{content:'✗';color:var(--error-700);font-weight:600;flex-shrink:0}
+
+/* ── ACCESO ── */
+.acc-rule{display:flex;gap:var(--sp4);padding:var(--sp5) 0;border-bottom:1px solid var(--border);align-items:flex-start}
+.acc-rule:last-child{border-bottom:none}
+.acc-num{width:32px;height:32px;border-radius:50%;background:var(--brand-100);color:var(--brand-800);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.acc-ttl{font-size:14px;font-weight:600;color:var(--text-default);margin-bottom:4px}
+.acc-desc{font-size:13px;color:var(--text-lighter);line-height:1.5}
+
+/* ── BADGE ── */
+.badge{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;border-radius:99px}
+.b-brand{background:var(--brand-100);color:var(--brand-800)}
+.b-success{background:var(--success-100);color:var(--success-700)}
+.b-error{background:var(--error-100);color:var(--error-700)}
+.b-info{background:var(--info-100);color:var(--info-700)}
+
+/* ── CALLOUT ── */
+.callout{border-radius:var(--r-m);padding:var(--sp4) var(--sp5);margin:var(--sp4) 0;font-size:13px;line-height:1.5;display:flex;gap:var(--sp3);align-items:flex-start}
+.c-brand{background:var(--brand-100);color:var(--brand-800);border-left:3px solid var(--brand-400)}
+.c-warn{background:var(--warning-100);color:var(--warning-700);border-left:3px solid #f59e0b}
+.c-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+
+/* ── VOZ SPECTRUM ── */
+.spectrum{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--r-m);overflow:hidden;margin:var(--sp5) 0}
+.spec-col{flex:1;padding:var(--sp4)}
+.spec-col:not(:last-child){border-right:1px solid var(--border)}
+.spec-hd{font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;margin-bottom:var(--sp2)}
+.spec-txt{font-size:12px;line-height:1.5}
+
+/* ── INVESTIGACIÓN GRID ── */
+.inv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp3);margin:var(--sp4) 0}
+.inv-item{background:var(--neutral-100);border-radius:var(--r-m);padding:var(--sp4);border:1px solid var(--border)}
+.inv-ico{font-size:20px;margin-bottom:var(--sp2)}
+.inv-ttl{font-size:12px;font-weight:600;color:var(--text-default);margin-bottom:var(--sp2)}
+.inv-desc{font-size:12px;color:var(--text-lighter);line-height:1.5}
+@media(max-width:680px){.inv-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- HEADER -->
+<header class="header">
+  <div class="h-tag">Design · UX Writing · Humand</div>
+  <h1>Guía de UX Writing</h1>
+  <p>Lineamientos, principios y herramientas para escribir con consistencia, claridad y propósito en Humand. Un recurso de referencia para el equipo de diseño, producto y desarrollo.</p>
+  <div class="h-meta">
+    <span><strong>Fuente principal:</strong> Parnofiello, M. — UX Writing en español (2020)</span>
+    <span><strong>Referencias:</strong> Nielsen/NN Group · Steve Krug · George A. Miller</span>
+    <span><strong>Equipo:</strong> Diseño · Producto · Desarrollo</span>
+  </div>
+</header>
+
+<!-- TABS -->
+<nav class="tabs-nav">
+  <button class="tab-btn" onclick="showTab(&#39;t1&#39;,this)">
+    <span>📐</span> Principios <span class="tab-num">1</span>
+  </button>
+  <button class="tab-btn" onclick="showTab(&#39;t2&#39;,this)">
+    <span>🧩</span> Componentes <span class="tab-num">2</span>
+  </button>
+  <button class="tab-btn" onclick="showTab(&#39;t3&#39;,this)">
+    <span>🎙</span> Voz y Tono <span class="tab-priority">CLAVE</span>
+  </button>
+  <button class="tab-btn" onclick="showTab(&#39;t4&#39;,this)">
+    <span>✍️</span> Reglas <span class="tab-num">4</span>
+  </button>
+  <button class="tab-btn active" onclick="showTab(&#39;t5&#39;,this)">
+    <span>⚙️</span> Framework <span class="tab-num">5</span>
+  </button>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- TAB 1: PRINCIPIOS -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div id="t1" class="tab-panel">
+
+  <div class="card">
+    <h2 class="sec-title">¿Qué es UX Writing?</h2>
+    <p class="sec-sub">No es escribir bien en abstracto. Es escribir con propósito, basado en datos reales y centrado en la experiencia de quien usa el producto.</p>
+
+    <div class="citation">
+      <div class="citation-text">"El UX Writer hace producto. Todo lo que define está —o debería estar, si se hace bien— basado en métricas reales y guiado por ellas. Hay que entender qué le pasa al usuario, a quién le pasa, por qué le pasa, cuándo le pasa y cómo vamos a hacer para resolver eso."</div>
+      <div class="citation-source">Marisol Parnofiello — UX Writing en español, Cap. III</div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="g2">
+      <div>
+        <span class="label">UX Writing</span>
+        <p class="body">Lenguaje de <strong>ayuda</strong>. El objetivo es que el usuario entienda y use el producto de forma intuitiva, sin fricción. El lenguaje del UXWer es el de la ayuda: busca que el usuario entienda y use el producto de forma intuitiva.</p>
+        <p class="body">Cubre: flujos de acción, botones, errores, empty states, formularios, modales, notificaciones, emails transaccionales, tooltips, contenido de accesibilidad y chatbots.</p>
+      </div>
+      <div>
+        <span class="label">Copywriting</span>
+        <p class="body">Lenguaje de <strong>persuasión</strong>. El objetivo es que el usuario elija la marca o el producto. Trabaja desde la invitación a elegir la empresa o el producto.</p>
+        <p class="body">Es importante que todos los perfiles que escriben en una empresa estén alineados bajo una misma voz: UX, marketing, publicidad, redes sociales. Cada cadena es tan fuerte como su eslabón más débil.</p>
+      </div>
+    </div>
+
+    <div class="callout c-brand" style="margin-top:var(--sp4)">
+      <span class="c-icon">💡</span>
+      <div>Si un mensaje no se entiende, la empresa no convierte: no vende, vende de forma poco eficiente o genera fricción en atención al cliente. <strong>El valor del UX Writing es absolutamente medible.</strong></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="sec-title">Los 6 principios de escritura digital</h2>
+    <p class="sec-sub">El marco operativo central del libro. Cada texto del producto debería poder evaluarse contra estos seis criterios antes de salir a producción.</p>
+
+    <div class="g2">
+
+      <div class="pc">
+        <div class="pc-num">01</div>
+        <div class="pc-name">Si ayuda, es mejor</div>
+        <div class="pc-desc">Antes de escribir, hay que preguntarse si realmente el uso del sistema necesita escritura o si el diseño puede resolver el problema solo. Un texto que "saca del apuro" convierte al producto en una ruta de ripio. La tarea es que el usuario se deslice por la plataforma sin trabas. Que un texto sea transparente es un buen objetivo; que sea disfrutable, es uno más alto.</div>
+        <div class="cmp">
+          <div class="cmp-row bad"><div class="cmp-icon">✗</div><div class="cmp-text">Agregar texto que explica cómo funciona un botón confuso</div><div class="cmp-note">El problema es el botón</div></div>
+          <div class="cmp-row good"><div class="cmp-icon">♡</div><div class="cmp-text">Rediseñar el botón para que sea autoexplicativo</div><div class="cmp-note">Solución de raíz</div></div>
+        </div>
+      </div>
+
+      <div class="pc">
+        <div class="pc-num">02</div>
+        <div class="pc-name">Breve</div>
+        <div class="pc-desc">Las personas leemos para lograr algo. Cada carácter es oro. Escribir sabiendo que el usuario puede leer mientras camina, mientras está comiendo o en una habitación con poquísima conexión. Ser breve e ir al punto es clave porque ayuda a escribir pensando en el peor contexto. Y el peor contexto funciona en el mejor; al revés, no.</div>
+        <div class="cmp">
+          <div class="cmp-row bad"><div class="cmp-icon">✗</div><div class="cmp-text">¿Estás seguro que querés abandonar el sitio?</div><div class="cmp-note">Largo, queísmo</div></div>
+          <div class="cmp-row ok"><div class="cmp-icon">✓</div><div class="cmp-text">¿Seguro de que querés salir?</div><div class="cmp-note">Mejor, más corto</div></div>
+          <div class="cmp-row good"><div class="cmp-icon">♡</div><div class="cmp-text">¿Querés salir?</div><div class="cmp-note">Bien breve y directo</div></div>
+        </div>
+      </div>
+
+      <div class="pc">
+        <div class="pc-num">03</div>
+        <div class="pc-name">Útil</div>
+        <div class="pc-desc">Dar información en el momento y en la instancia indicada: ni antes ni después, ni poco ni demasiado. Que algo esté muy extendido en las plataformas no significa que esté bien. "¡Ups! Algo pasa" recorre la web como el error 404. El lenguaje técnico no es útil para todos los usuarios. Útil es lo más breve pero concreto posible.</div>
+        <div class="cmp">
+          <div class="cmp-row bad"><div class="cmp-icon">✗</div><div class="cmp-text">¡Ups! Algo pasa.</div><div class="cmp-note">No le contamos qué pasa</div></div>
+          <div class="cmp-row ok"><div class="cmp-icon">✓</div><div class="cmp-text">El sitio está caído.</div><div class="cmp-note">Le contamos qué ocurre</div></div>
+          <div class="cmp-row good"><div class="cmp-icon">♡</div><div class="cmp-text">Hasta las 20 h estaremos mejorando el sitio.</div><div class="cmp-note">Informa qué pasa y hasta cuándo</div></div>
+        </div>
+      </div>
+
+      <div class="pc">
+        <div class="pc-num">04</div>
+        <div class="pc-name">Claro</div>
+        <div class="pc-desc">Es lo que se conoce como <em>plain language</em>. Un tipo de escritura simple, pero no por eso aburrida, centrada en la claridad. Escribir para un nivel de lectocomprensión de séptimo grado: quienes pueden entender textos complejos también entienden los simples, pero al revés no. Hay que sacarse la corbata al momento de escribir.</div>
+        <div class="cmp">
+          <div class="cmp-row bad"><div class="cmp-icon">✗</div><div class="cmp-text">El pasaje que compraste está pendiente de aprobación por la tarjeta que lo ha emitido.</div><div class="cmp-note">Largo y rebuscado</div></div>
+          <div class="cmp-row good"><div class="cmp-icon">♡</div><div class="cmp-text">¡Casi! Apenas tu pago esté aprobado, te avisamos por mail.</div><div class="cmp-note">Claro, corto, humano</div></div>
+        </div>
+      </div>
+
+      <div class="pc">
+        <div class="pc-num">05</div>
+        <div class="pc-name">Humano</div>
+        <div class="pc-desc">Los textos que escribimos en los productos digitales reemplazan la dimensión dialógica del cara a cara. Por eso, la escritura tiene que responder al habla y al contexto regional y temporal en el que trabajará. Usar tiempos simples, voz activa, personalizar cuando sea posible y siempre explicar la causa de las acciones del sistema.</div>
+        <div class="cmp">
+          <div class="cmp-row bad"><div class="cmp-icon">✗</div><div class="cmp-text">La sesión ha expirado.</div><div class="cmp-note">Impersonal, tiempo compuesto</div></div>
+          <div class="cmp-row ok"><div class="cmp-icon">✓</div><div class="cmp-text">Cerramos la sesión.</div><div class="cmp-note">Activo, quién lo hizo</div></div>
+          <div class="cmp-row good"><div class="cmp-icon">♡</div><div class="cmp-text">Cerramos tu sesión por seguridad.</div><div class="cmp-note">Humano, personalizado, explica la causa</div></div>
+        </div>
+      </div>
+
+      <div class="pc">
+        <div class="pc-num">06</div>
+        <div class="pc-name">Con evidencia</div>
+        <div class="pc-desc">UXW es una disciplina que tiene mucho más que ver con la evidencia empírica que con la inspiración. Mucho del material que producen los escritores de productos puede —y debería— ser probado. Hay pruebas A/B para ver qué opción funciona mejor, e investigación cualitativa para entender cómo habla realmente el usuario.</div>
+        <div class="citation-neutral" style="margin-top:var(--sp4)">
+          <div class="citation-text">"Hacer UX Writing es escribir basados en datos reales (data-driven). Sin datos, escribir sería a los UXWers lo que pintar es a los diseñadores visuales."</div>
+          <div class="citation-source">Parnofiello — Cap. VIII</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="div"></div>
+
+    <div class="g2">
+      <div class="citation-neutral" style="margin:0">
+        <div class="citation-text">"Happy talk must die. Instructions must die." El contenido que se autoproclama fantástico y funciona como conversaciones de ascensor solo para "decir algo" es inútil para el usuario. Si hay que hacer una guía porque las funcionalidades fallan, el problema no es la guía.</div>
+        <div class="citation-source">Steve Krug — Don't Make Me Think (citado en Parnofiello, Cap. VIII)</div>
+      </div>
+      <div class="citation-neutral" style="margin:0">
+        <div class="citation-text">Frente a un tono amigable y uno más serio, usuarios que tenían que elegir una institución médica optaron por la versión más seria: nadie quiere poner su salud o su dinero en manos de alguien demasiado risueño. La voz puede determinar si un usuario compra tu producto o el de la competencia.</div>
+        <div class="citation-source">Nielsen Norman Group — Tone of Voice Study (citado en Parnofiello, Cap. III)</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- TAB 2: COMPONENTES -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div id="t2" class="tab-panel">
+
+  <div class="card">
+    <h2 class="sec-title">Cómo escribir cada componente</h2>
+    <p class="sec-sub">Reglas concretas para los elementos más frecuentes de la interfaz. Cada componente UI tiene su pedagogía: los usuarios están acostumbrados a patrones. Usarlos para otros fines es contraproducente y obliga al usuario a pensar de más.</p>
+    <div class="citation">
+      <div class="citation-text">"Cada componente UI tiene su pedagogía. Los usuarios están acostumbrados. Usar elementos para otros fines es contraproducente. Forzar textos en componentes que no fueron diseñados para los mismos fines que el mensaje del texto es una mala práctica que confunde a los usuarios."</div>
+      <div class="citation-source">Parnofiello — Cap. IX</div>
+    </div>
+  </div>
+
+  <div class="comp">
+    <div class="comp-hd">
+      <span>🔘</span><span class="comp-name">Botones / CTAs</span>
+      <span class="badge b-brand" style="margin-left:auto">Máx. 3 palabras</span>
+    </div>
+    <div class="comp-body">
+      <p class="body">El botón es la acción más importante de la interfaz. Tiene que ser inequívoco: al leerlo, el usuario sabe exactamente qué va a pasar.</p>
+      <ul class="rlist" style="margin-bottom:var(--sp5)">
+        <li>Usar <strong>verbo en infinitivo</strong> que describa exactamente lo que pasa al hacer clic.</li>
+        <li>Ser específico: no "Aceptar" si podés decir "Guardar cambios". No "Continuar" si podés decir "Ir al pago".</li>
+        <li>En modales con dos opciones, el botón principal nombra la acción, no confirma en abstracto.</li>
+        <li>Nunca monosílabos solos como botones de confirmación ("Sí / No").</li>
+        <li>El CTA siempre al final de la pantalla: su prestancia tiende a activar la acción. En raras ocasiones el usuario vuelve a la pantalla anterior.</li>
+      </ul>
+      <table class="ba">
+        <tbody><tr><th>✗ Evitar</th><th>✓ Preferir</th></tr>
+        <tr><td>Aceptar</td><td>Guardar cambios</td></tr>
+        <tr><td>Continuar</td><td>Ir al siguiente paso</td></tr>
+        <tr><td>OK</td><td>Entendido</td></tr>
+        <tr><td>Enviar</td><td>Enviar solicitud</td></tr>
+        <tr><td>Sí / No</td><td>Eliminar / Cancelar</td></tr>
+        <tr><td>Haga clic aquí</td><td>Descargar informe</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="comp">
+    <div class="comp-hd">
+      <span>⚠️</span><span class="comp-name">Mensajes de error</span>
+      <span class="badge b-error" style="margin-left:auto">¿Qué? ¿Por qué? ¿Qué hago?</span>
+    </div>
+    <div class="comp-body">
+      <p class="body">El error es el momento de mayor fricción. El usuario ya está frustrado. Un buen mensaje de error reduce el estrés y le dice exactamente qué hacer. Todo error debe responder tres preguntas: <strong>¿qué pasó?</strong>, <strong>¿por qué pasó?</strong> y <strong>¿qué puede hacer el usuario ahora?</strong></p>
+      <ul class="rlist" style="margin-bottom:var(--sp5)">
+        <li>Nunca culpar al usuario. Evitar "Usted ingresó un valor incorrecto".</li>
+        <li>No exponer tecnicismos ni códigos de error al usuario final.</li>
+        <li>Dar siempre una salida: un link, un CTA o una instrucción específica.</li>
+        <li>La escritura no es responsable de resolver problemas funcionales. Un buen UXWer detecta cuándo una heurística está fallando y levanta la mano antes de escribir textos que parchean problemas de diseño.</li>
+      </ul>
+      <table class="ba">
+        <tbody><tr><th>✗ Evitar</th><th>✓ Preferir</th></tr>
+        <tr><td>Error 403. Acceso denegado.</td><td>No tenés permiso para ver esta sección. Contactá a tu administrador.</td></tr>
+        <tr><td>El campo es obligatorio.</td><td>Ingresá tu correo electrónico para continuar.</td></tr>
+        <tr><td>Contraseña inválida.</td><td>La contraseña no coincide. Revisala o recuperá tu acceso.</td></tr>
+        <tr><td>Algo salió mal. Intente más tarde.</td><td>No pudimos guardar los cambios. Intentá de nuevo o contactá soporte.</td></tr>
+        <tr><td>Se produjo un error inesperado.</td><td>Hubo un problema de nuestra parte. Estamos trabajando para resolverlo.</td></tr>
+      </tbody></table>
+      <div class="citation-neutral" style="margin-top:var(--sp5)">
+        <div class="citation-text">"Incluso mejor que un buen mensaje de error es un diseño cuidadoso que evita que ocurra un problema en primer lugar. Eliminá las condiciones propensas a errores o verificalas y ofrecé a los usuarios una opción de confirmación antes de que se comprometan con la acción."</div>
+        <div class="citation-source">Jakob Nielsen — Heurística #5: Prevención de errores (citado en Parnofiello, Cap. VIII)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comp">
+    <div class="comp-hd">
+      <span>📭</span><span class="comp-name">Empty states</span>
+      <span class="badge b-info" style="margin-left:auto">Oportunidad, no callejón sin salida</span>
+    </div>
+    <div class="comp-body">
+      <p class="body">El estado vacío es una oportunidad, no un problema. Es el primer contacto del usuario con una funcionalidad nueva. Nunca debe sentirse como un callejón sin salida.</p>
+      <div class="g3" style="margin-bottom:var(--sp5)">
+        <div class="card-flat"><div class="block-sub">Primera vez</div><p class="body" style="margin:0;font-size:13px">El usuario nunca usó esta función. Explicá qué hace y cómo empezar. Incluí un CTA que impulse la primera acción.</p></div>
+        <div class="card-flat"><div class="block-sub">Sin resultados</div><p class="body" style="margin:0;font-size:13px">Buscó algo y no hubo coincidencias. Explicá por qué y ofrecé alternativas concretas.</p></div>
+        <div class="card-flat"><div class="block-sub">Completado</div><p class="body" style="margin:0;font-size:13px">El usuario terminó todo. Reforzar positivamente, sin exagerar. Celebrar con mesura en contexto profesional.</p></div>
+      </div>
+      <table class="ba">
+        <tbody><tr><th>✗ Evitar</th><th>✓ Preferir</th></tr>
+        <tr><td>No hay evaluaciones.</td><td>Todavía no creaste ninguna evaluación. Creá la primera para empezar a medir el desempeño de tu equipo.</td></tr>
+        <tr><td>Sin resultados.</td><td>No encontramos resultados para esta búsqueda. Probá con otros términos o revisá los filtros aplicados.</td></tr>
+        <tr><td>No hay notificaciones.</td><td>Todo al día. Cuando haya novedades, las vas a ver acá.</td></tr>
+        <tr><td>No hay datos.</td><td>Todavía no hay objetivos registrados. Creá el primero para empezar a hacer seguimiento.</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="comp">
+    <div class="comp-hd"><span>🏷️</span><span class="comp-name">Labels y placeholders</span></div>
+    <div class="comp-body">
+      <div class="g2">
+        <div>
+          <span class="label">Labels</span>
+          <ul class="rlist">
+            <li>Breves y descriptivos. Una o dos palabras cuando sea posible.</li>
+            <li>No terminar en dos puntos ("Nombre:" → "Nombre").</li>
+            <li>Siempre visibles. No reemplazar el label por el placeholder.</li>
+            <li>El label desaparece al tipear: si era la única orientación, el usuario queda sin referencia.</li>
+          </ul>
+        </div>
+        <div>
+          <span class="label">Placeholders</span>
+          <ul class="rlist">
+            <li>Usarlos solo cuando agregan valor: un formato esperado o un ejemplo concreto.</li>
+            <li>No repetir lo que ya dice el label.</li>
+            <li>No usar como instrucción obligatoria.</li>
+          </ul>
+        </div>
+      </div>
+      <table class="ba" style="margin-top:var(--sp4)">
+        <tbody><tr><th>✗ Evitar</th><th>✓ Preferir</th></tr>
+        <tr><td>Label: "Ingrese su nombre completo"</td><td>Label: "Nombre completo" + Placeholder: "Ej: María García"</td></tr>
+        <tr><td>Placeholder reemplaza al label</td><td>Label siempre visible, placeholder como ayuda opcional</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="comp">
+    <div class="comp-hd"><span>💬</span><span class="comp-name">Tooltips y textos de ayuda</span></div>
+    <div class="comp-body">
+      <ul class="rlist" style="margin-bottom:var(--sp5)">
+        <li>Si necesitás un tooltip para explicar un botón, probablemente el botón esté mal nombrado.</li>
+        <li>Una o dos oraciones máximo. Responder: "¿Para qué sirve esto?" o "¿Qué pasa si hago esto?".</li>
+        <li>No duplicar información ya visible en pantalla.</li>
+        <li>Evitar jerga técnica.</li>
+      </ul>
+      <table class="ba">
+        <tbody><tr><th>✗ Evitar</th><th>✓ Preferir</th></tr>
+        <tr><td>Función avanzada de configuración del sistema.</td><td>Definí quién puede ver y editar este contenido dentro de tu equipo.</td></tr>
+        <tr><td>Ver más información.</td><td>Los objetivos vinculados afectan el cálculo del progreso general.</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="comp">
+    <div class="comp-hd">
+      <span>🗂️</span><span class="comp-name">Diálogos y modales</span>
+      <span class="badge b-error" style="margin-left:auto">Usar con prudencia</span>
+    </div>
+    <div class="comp-body">
+      <p class="body">Los diálogos interrumpen intencionalmente al usuario. Hay que usarlos con mucha prudencia, esporádicamente y solo cuando realmente necesitamos que el usuario confirme algo crítico o tome una decisión.</p>
+      <div class="g3" style="margin-bottom:var(--sp5)">
+        <div class="card-flat">
+          <div class="block-sub">Título</div>
+          <p class="body" style="margin:0;font-size:13px">Conciso, informativo y directo. Puede ser pregunta, pero específica. "¿Estás seguro?" → "¿Seguro de cerrar sesión?". Debe dialogar con los botones.</p>
+        </div>
+        <div class="card-flat">
+          <div class="block-sub">Texto explicativo</div>
+          <p class="body" style="margin:0;font-size:13px">Opcional. Aclara el propósito, nunca más importante que el título. Si el título es suficiente, omitirlo.</p>
+        </div>
+        <div class="card-flat">
+          <div class="block-sub">Botones</div>
+          <p class="body" style="margin:0;font-size:13px">Cancelar a la izquierda, siempre habilitado. Acción principal a la derecha. El botón de confirmar nombra la acción.</p>
+        </div>
+      </div>
+      <table class="ba">
+        <tbody><tr><th>✗ Evitar</th><th>✓ Preferir</th></tr>
+        <tr><td>Cerrar sesión / Sí — No</td><td>¿Seguro querés salir? / Cancelar — Sí, quiero salir</td></tr>
+        <tr><td>¿Estás seguro? Esta acción es permanente e irreversible bajo ninguna circunstancia.</td><td>¿Borramos este archivo? / Si lo hacés, no podremos recuperarlo. / Cancelar — Borrar archivo</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- TAB 3: VOZ Y TONO -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div id="t3" class="tab-panel">
+
+  <div class="card">
+    <h2 class="sec-title">Voz vs. Tono</h2>
+    <p class="sec-sub">Dos conceptos distintos que trabajan en conjunto para que el producto suene coherente y empático en cada punto de contacto con el usuario.</p>
+
+    <div class="citation">
+      <div class="citation-text">"La voz es el modo en el que el producto o servicio le habla al usuario, su personalidad. El tono, en cambio, es la modulación de esa voz, según el estadio de la tarea o el momento que el usuario atraviese en la plataforma, según el contexto."</div>
+      <div class="citation-source">Marisol Parnofiello — UX Writing en español, Cap. III · Voz y Tono</div>
+    </div>
+
+    <div class="spectrum">
+      <div class="spec-col" style="background:var(--brand-100)">
+        <div class="spec-hd" style="color:var(--brand-400)">Voz</div>
+        <div class="spec-txt" style="color:var(--brand-800)"><strong>La personalidad del producto.</strong> Constante. No cambia según el contexto. Es quiénes somos como producto, expresado a través del lenguaje en cualquier pantalla, en cualquier momento.</div>
+      </div>
+      <div class="spec-col">
+        <div class="spec-hd" style="color:var(--text-lighter)">Tono</div>
+        <div class="spec-txt" style="color:var(--text-default)"><strong>La modulación de esa voz.</strong> Variable. Se adapta al momento emocional del usuario y al tipo de interacción. Es cómo hablamos en cada situación concreta.</div>
+      </div>
+      <div class="spec-col" style="background:var(--neutral-100)">
+        <div class="spec-hd" style="color:var(--text-lighter)">Analogía</div>
+        <div class="spec-txt" style="color:var(--text-lighter)">Una persona con voz tranquila y firme no tiene el mismo tono cuando recibe una buena noticia que cuando recibe una mala. La voz es la misma; el contexto modula el tono.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="sec-title">Cómo se define la voz</h2>
+    <p class="sec-sub">Definir la voz no es una tarea de copy: es una tarea de estrategia. Requiere investigación real, no suposiciones del equipo sobre cómo habla el usuario.</p>
+
+    <div class="citation">
+      <div class="citation-text">"Definir la voz de un producto requiere, en principio, entender los objetivos de negocio, hacer entrevistas cualitativas con personas que trabajan en la empresa (de todos los rangos, no solo los ejecutivos), pero en especial necesita de estudios cualitativos y cuantitativos con los usuarios. ¿Cómo hablan en el día a día? ¿Qué hacen? ¿Qué dispositivos usan? ¿Qué palabras manejan para referirse a tareas que vamos a ofrecerles en la plataforma?"</div>
+      <div class="citation-source">Parnofiello — Cap. III · Voz y Tono</div>
+    </div>
+
+    <div class="inv-grid">
+      <div class="inv-item">
+        <div class="inv-ico">🎯</div>
+        <div class="inv-ttl">Objetivos de negocio</div>
+        <div class="inv-desc">¿Qué quiere transmitir la empresa? ¿Cuál es su posicionamiento? ¿En qué se diferencia de la competencia?</div>
+      </div>
+      <div class="inv-item">
+        <div class="inv-ico">👥</div>
+        <div class="inv-ttl">Investigación de usuarios</div>
+        <div class="inv-desc">¿Cómo hablan los usuarios en el día a día? ¿Qué palabras usan? ¿Qué nivel de formalidad esperan? ¿Qué contexto tienen cuando usan el producto?</div>
+      </div>
+      <div class="inv-item">
+        <div class="inv-ico">🏢</div>
+        <div class="inv-ttl">Identidad de marca</div>
+        <div class="inv-desc">La voz del producto debe ser coherente con la voz de la empresa en todos sus canales: marketing, soporte, comunicación interna.</div>
+      </div>
+      <div class="inv-item">
+        <div class="inv-ico">🔍</div>
+        <div class="inv-ttl">Benchmark competitivo</div>
+        <div class="inv-desc">Analizar cómo hablan los productos que el usuario ya conoce y usa. No para copiar, sino para detectar patrones y diferenciadores.</div>
+      </div>
+      <div class="inv-item">
+        <div class="inv-ico">🧪</div>
+        <div class="inv-ttl">Testeo con usuarios</div>
+        <div class="inv-desc">Las suposiciones sobre cómo el usuario entiende el texto suelen estar equivocadas. El tono que "sentimos" que funciona debe validarse con personas reales.</div>
+      </div>
+      <div class="inv-item">
+        <div class="inv-ico">📋</div>
+        <div class="inv-ttl">Atributos de voz</div>
+        <div class="inv-desc">El resultado es un set de atributos: palabras que describen cómo suena el producto, con definición práctica y límites claros de qué sí y qué no.</div>
+      </div>
+    </div>
+
+    <div class="callout c-warn" style="margin-top:var(--sp4)">
+      <span class="c-icon">⚠️</span>
+      <div><strong>Error muy común:</strong> escribir sesgados por lo que creemos que le pasa al usuario. Nosotros no somos el usuario. Estamos siempre contaminados por un montón de información que el usuario no tiene: los objetivos de negocio, los nombres internos de los módulos, la lógica técnica del sistema.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="sec-title">Los atributos de voz</h2>
+    <p class="sec-sub">Cada atributo define cómo suena Humand. La clave está en el equilibrio: cada atributo tiene un límite que evita caer en el extremo opuesto indeseado.</p>
+
+    <div class="g2">
+      <div class="vc">
+        <div class="vc-atr">Claro</div>
+        <div class="vc-def">Usamos el lenguaje que el usuario ya conoce. Evitamos tecnicismos, jerga interna y frases ambiguas. Cada texto se entiende en la primera lectura, sin ambigüedad y sin necesidad de releerlo.</div>
+        <div class="vc-sn">
+          <div class="vc-si"><strong>✓ Sí es</strong>Precisión, simplicidad, lenguaje cotidiano del usuario. Palabras cortas sobre palabras largas cuando significan lo mismo.</div>
+          <div class="vc-no"><strong>✗ No es</strong>Simplista ni condescendiente. Los conceptos complejos se explican bien, no se evitan ni se simplifican hasta perder el significado.</div>
+        </div>
+      </div>
+
+      <div class="vc">
+        <div class="vc-atr">Directo</div>
+        <div class="vc-def">Vamos al punto. No rodeamos la información con frases de cortesía vacías ni párrafos introductorios innecesarios. El usuario llegó a hacer algo: lo ayudamos a hacerlo sin rodeos.</div>
+        <div class="vc-sn">
+          <div class="vc-si"><strong>✓ Sí es</strong>Eficiente, sin relleno, sin "blah blah". Cada frase cumple una función.</div>
+          <div class="vc-no"><strong>✗ No es</strong>Brusco ni frío. Ser eficiente no es ser descortés ni eliminar todo rastro de humanidad del texto.</div>
+        </div>
+      </div>
+
+      <div class="vc">
+        <div class="vc-atr">Cercano</div>
+        <div class="vc-def">Hablamos como personas, no como sistemas. Registro formal pero humano: cuidamos la gramática sin sonar a documento legal. Reconocemos el contexto emocional del usuario en cada momento.</div>
+        <div class="vc-sn">
+          <div class="vc-si"><strong>✓ Sí es</strong>Cálido, natural, empático. Responde al habla y al contexto cultural del usuario.</div>
+          <div class="vc-no"><strong>✗ No es</strong>Informal. Sin slang, sin humor forzado, sin emojis decorativos en la interfaz.</div>
+        </div>
+      </div>
+
+      <div class="vc">
+        <div class="vc-atr">Profesional</div>
+        <div class="vc-def">Todo lo que escribimos refleja competencia y seriedad. El usuario confía datos sensibles de su equipo, su empresa y su desempeño a la plataforma. El lenguaje transmite esa confianza.</div>
+        <div class="vc-sn">
+          <div class="vc-si"><strong>✓ Sí es</strong>Confiable, sólido, riguroso. El usuario se siente seguro con lo que lee.</div>
+          <div class="vc-no"><strong>✗ No es</strong>Corporativo ni frío. La formalidad no justifica frases largas, pasiva impersonal ni vocabulario arcaico.</div>
+        </div>
+      </div>
+
+      <div class="vc" style="grid-column:1/-1">
+        <div class="vc-atr">Útil</div>
+        <div class="vc-def">Cada texto sirve para algo concreto. Ayudamos al usuario a avanzar, entender o decidir. No escribimos para cumplir: escribimos para resolver. Nunca agregar texto solo porque "queda bien".</div>
+        <div class="vc-sn">
+          <div class="vc-si"><strong>✓ Sí es</strong>Orientado a la acción, concreto, funcional. Cada palabra justifica su presencia en el texto.</div>
+          <div class="vc-no"><strong>✗ No es</strong>Exhaustivo. No explicamos todo lo posible: explicamos lo que el usuario necesita en ese momento exacto.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="sec-title">Tono por contexto</h2>
+    <p class="sec-sub">El ánimo del usuario en cada momento del flujo es lo que define el tono. Misma voz, diferente modulación. No es lo mismo hablarle a alguien que acaba de completar una tarea que a alguien que acaba de encontrar un error.</p>
+
+    <div class="citation">
+      <div class="citation-text">"No es lo mismo hablarle a un usuario cuando está feliz porque compró el pasaje a sus vacaciones que cuando hay que informarle que el vuelo va a tener que ser reprogramado por problemas con la aerolínea. El ánimo (mood) del usuario es lo que define el tono con el que el UXWer tendrá que manejarse."</div>
+      <div class="citation-source">Parnofiello — Cap. III · Voz y Tono</div>
+    </div>
+
+    <div style="overflow-x:auto;margin-top:var(--sp5)">
+      <table class="tono">
+        <thead>
+          <tr>
+            <th style="width:120px">Contexto</th>
+            <th>Estado emocional</th>
+            <th>Tono recomendado</th>
+            <th>✗ Evitar</th>
+            <th>✓ Usar en Humand</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="t-ctx">🎉 Éxito</span></td>
+            <td>Satisfecho, aliviado, motivado</td>
+            <td>Positivo, afirmativo, breve. Celebrar sin exagerar.</td>
+            <td class="t-bad">¡Felicitaciones! ¡Lo lograste! 🎉🎉🎉</td>
+            <td class="t-good">Evaluación enviada. El equipo recibirá una notificación.</td>
+          </tr>
+          <tr>
+            <td><span class="t-ctx">⚠️ Error</span></td>
+            <td>Frustrado, confundido, posiblemente apurado</td>
+            <td>Calmado, claro, orientado a la solución. Sin culpar, sin tecnicismos.</td>
+            <td class="t-bad">ERROR: Operación no completada. Código 500.</td>
+            <td class="t-good">No pudimos guardar los cambios. Revisá tu conexión e intentá de nuevo.</td>
+          </tr>
+          <tr>
+            <td><span class="t-ctx">📭 Empty state</span></td>
+            <td>Neutral o levemente frustrado (sin resultados)</td>
+            <td>Orientador, invitador, claro. Nunca un callejón sin salida.</td>
+            <td class="t-bad">No hay datos.</td>
+            <td class="t-good">Todavía no creaste ningún objetivo. Creá el primero para empezar a hacer seguimiento.</td>
+          </tr>
+          <tr>
+            <td><span class="t-ctx">🚀 Onboarding</span></td>
+            <td>Curioso, levemente inseguro, con expectativas</td>
+            <td>Alentador, simple, progresivo. No abrumar con información.</td>
+            <td class="t-bad">Gracias por registrarte. A continuación encontrarás una serie de pasos que deberás completar...</td>
+            <td class="t-good">Bienvenido. Empecemos por lo más importante: tu primer objetivo.</td>
+          </tr>
+          <tr>
+            <td><span class="t-ctx">🗑️ Acción crítica</span></td>
+            <td>Decidido, pero necesita confirmación consciente</td>
+            <td>Sobrio, preciso, sin dramatizar. Dar información para decidir con consciencia.</td>
+            <td class="t-bad">¿Estás seguro/a? Esta acción es permanente e irreversible y no podrá recuperarse bajo ninguna circunstancia.</td>
+            <td class="t-good">¿Eliminar esta evaluación? Esta acción no se puede deshacer.</td>
+          </tr>
+          <tr>
+            <td><span class="t-ctx">🔔 Notificación</span></td>
+            <td>Ocupado, con foco en otra cosa</td>
+            <td>Breve, específico, accionable. Sin texto que compita con la tarea actual.</td>
+            <td class="t-bad">Tenés nuevas actualizaciones pendientes de revisión.</td>
+            <td class="t-good">Marcela completó su autoevaluación. Ver evaluación →</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="sec-title">Microcopy aplicado a Humand</h2>
+    <p class="sec-sub">Ejemplos concretos de cómo se aplica la voz y el tono en los módulos del producto. Estos ejemplos sirven como referencia y punto de partida.</p>
+
+    <div class="mc-block">
+      <div class="mc-hd">📊 Módulo de Performance / Evaluaciones</div>
+      <div class="mc-body">
+        <div class="mc-examples">
+          <div class="mc-item"><div class="mc-ctx">Botón principal</div><div class="mc-copy"><strong>Iniciar evaluación</strong></div></div>
+          <div class="mc-item"><div class="mc-ctx">Empty state</div><div class="mc-copy">Todavía no hay evaluaciones creadas. <strong>Crear la primera evaluación</strong> →</div></div>
+          <div class="mc-item"><div class="mc-ctx">Éxito al enviar</div><div class="mc-copy">Evaluación enviada. Tu equipo recibirá una notificación para completarla.</div></div>
+          <div class="mc-item"><div class="mc-ctx">Error de guardado</div><div class="mc-copy">No pudimos guardar la evaluación. Revisá tu conexión e intentá de nuevo.</div></div>
+          <div class="mc-item"><div class="mc-ctx">Acción crítica</div><div class="mc-copy">¿Eliminar esta evaluación? Los resultados parciales no se podrán recuperar.</div></div>
+          <div class="mc-item"><div class="mc-ctx">Tooltip</div><div class="mc-copy">Las evaluaciones cerradas no se pueden editar. Podés duplicarlas para crear una nueva versión.</div></div>
+          <div class="mc-item"><div class="mc-ctx">Placeholder</div><div class="mc-copy">Ej: Evaluación de desempeño Q2 2025</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mc-block">
+      <div class="mc-hd">🎯 Módulo de Objetivos / OKRs</div>
+      <div class="mc-body">
+        <div class="mc-examples">
+          <div class="mc-item"><div class="mc-ctx">Botón principal</div><div class="mc-copy"><strong>Crear objetivo</strong></div></div>
+          <div class="mc-item"><div class="mc-ctx">Empty state</div><div class="mc-copy">Tu equipo todavía no tiene objetivos definidos. <strong>Crear el primer objetivo</strong> para empezar a hacer seguimiento del desempeño.</div></div>
+          <div class="mc-item"><div class="mc-ctx">Progreso</div><div class="mc-copy">Registrá el avance de esta semana. El progreso se actualiza en el panel de tu equipo.</div></div>
+          <div class="mc-item"><div class="mc-ctx">Éxito al guardar</div><div class="mc-copy">Objetivo actualizado. El progreso ya es visible para tu equipo.</div></div>
+          <div class="mc-item"><div class="mc-ctx">Sin resultados</div><div class="mc-copy">No encontramos objetivos para "<em>[búsqueda]</em>". Probá con otros términos o revisá los filtros.</div></div>
+          <div class="mc-item"><div class="mc-ctx">Tooltip</div><div class="mc-copy">Los objetivos vinculados afectan el cálculo del progreso general del equipo.</div></div>
+          <div class="mc-item"><div class="mc-ctx">Onboarding</div><div class="mc-copy">Un objetivo claro tiene: un resultado medible, un responsable y una fecha de cierre. Te ayudamos a definirlo en tres pasos.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mc-block">
+      <div class="mc-hd">👤 Acceso y sesión</div>
+      <div class="mc-body">
+        <div class="mc-examples">
+          <div class="mc-item"><div class="mc-ctx">Sesión expirada</div><div class="mc-copy">Cerramos tu sesión por seguridad. <strong>Volver a ingresar</strong> →</div></div>
+          <div class="mc-item"><div class="mc-ctx">Sin permisos</div><div class="mc-copy">No tenés acceso a esta sección. Contactá a tu administrador para solicitar los permisos necesarios.</div></div>
+          <div class="mc-item"><div class="mc-ctx">Error de login</div><div class="mc-copy">El correo o la contraseña no son correctos. Revisalos o <strong>recuperá tu acceso</strong>.</div></div>
+          <div class="mc-item"><div class="mc-ctx">Primer acceso</div><div class="mc-copy">Bienvenido a Humand. Antes de empezar, completá tu perfil para que tu equipo pueda reconocerte.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="citation-neutral" style="margin-top:var(--sp5)">
+      <div class="citation-text">"Si alguna vez te preguntan qué hacés y al explicarlo te responden que nunca vieron esos textos, consideráte un éxito. UXW, cuando es bueno, es invisible."</div>
+      <div class="citation-source">Parnofiello — Cap. IX · El contenido, primero</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- TAB 4: REGLAS DE ESCRITURA -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div id="t4" class="tab-panel">
+
+  <div class="card">
+    <h2 class="sec-title">Reglas de escritura y escaneabilidad</h2>
+    <p class="sec-sub">Los usuarios no leen: escanean. Estas reglas ayudan a construir textos que se puedan leer rápido, encontrar fácil y entender a la primera.</p>
+    <div class="citation">
+      <div class="citation-text">"Aplicando estos recursos, el equipo de Nielsen mejoró la usabilidad de textos en un 124%. Son herramientas que sirven para evitar el llamado patrón F, para bajar la carga cognitiva al momento de encontrar qué contenido es valioso en las interfaces."</div>
+      <div class="citation-source">Parnofiello — Cap. X · Cómo hacer tus textos escaneables, citando a Nielsen Norman Group</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="sec-title">Do &amp; Don't</h2>
+    <p class="sec-sub">Las reglas más importantes en formato de referencia rápida.</p>
+    <div class="dodt">
+      <div class="do-blk">
+        <div class="do-hd">✓ Hacer siempre</div>
+        <ul class="do-list">
+          <li>Usar <strong>voz activa</strong>: el sujeto hace la acción.</li>
+          <li>Usar <strong>tiempos simples</strong>: "Compraste" no "Has comprado".</li>
+          <li>Usar <strong>verbos en infinitivo</strong> en botones y acciones.</li>
+          <li>Escribir desde la <strong>perspectiva del usuario</strong>, no del sistema.</li>
+          <li>Dar siempre una <strong>salida clara</strong> en los mensajes de error.</li>
+          <li>Usar el <strong>mismo término</strong> para el mismo concepto en todo el producto.</li>
+          <li>Negritas en <strong>conceptos completos</strong>, no en palabras sueltas.</li>
+          <li>Escribir <strong>enlaces predictivos</strong>: el usuario sabe adónde va.</li>
+          <li>Jerarquizar: <strong>lo más importante al principio</strong> y a la izquierda.</li>
+          <li><strong>Recortar al menos el 50%</strong> del texto original.</li>
+          <li>Usar <strong>lenguaje neutro LATAM</strong> en español formal.</li>
+        </ul>
+      </div>
+      <div class="dt-blk">
+        <div class="dt-hd">✗ Nunca hacer</div>
+        <ul class="dt-list">
+          <li>Mezclar tratamientos (tuteo / ustedeo) dentro del mismo flujo.</li>
+          <li>Usar <strong>mayúsculas sostenidas</strong> para dar énfasis.</li>
+          <li>Dejar mensajes de error sin explicación ni CTA.</li>
+          <li>Traducir literalmente del inglés ("setear", "clickear", "loguear").</li>
+          <li>Usar <strong>jerga técnica</strong> o nombres internos del equipo.</li>
+          <li>Disculparse en exceso: "Lamentamos los inconvenientes causados".</li>
+          <li>Escribir desde el sistema: "La solicitud no pudo ser procesada".</li>
+          <li>Usar <strong>placeholder como única orientación</strong> en formularios.</li>
+          <li>Ignorar los empty states: son oportunidades de guiar.</li>
+          <li>Usar "clic aquí", "leer más" como texto de enlace.</li>
+          <li>Escribir botones con más de <strong>tres palabras</strong>.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="sec-title">Reglas gramaticales específicas</h2>
+    <div class="g2">
+      <div>
+        <div class="block-sub">Voz activa</div>
+        <p class="body">La voz activa pone el foco en la acción y no en el objeto. Da humanidad al texto. La voz pasiva despersonifica y suena robótica.</p>
+        <table class="ba">
+          <tbody><tr><th>✗ Pasiva</th><th>✓ Activa</th></tr>
+          <tr><td>Tu recibo fue enviado por mail.</td><td>Enviamos tu recibo a tu mail.</td></tr>
+          <tr><td>Los cambios fueron guardados.</td><td>Guardamos los cambios.</td></tr>
+        </tbody></table>
+      </div>
+      <div>
+        <div class="block-sub">Tiempos simples</div>
+        <p class="body">Evitar los tiempos compuestos porque pueden sembrar dudas sobre las tareas. Los tiempos simples son más directos, más humanos y más fáciles de procesar.</p>
+        <table class="ba">
+          <tbody><tr><th>✗ Compuesto</th><th>✓ Simple</th></tr>
+          <tr><td>Has comprado.</td><td>¡Compraste!</td></tr>
+          <tr><td>La sesión ha expirado.</td><td>Cerramos tu sesión.</td></tr>
+        </tbody></table>
+      </div>
+      <div>
+        <div class="block-sub">Negritas</div>
+        <p class="body">Aplicar en conceptos enteros, nunca en palabras sueltas. Si todo es importante, nada lo es. Si las negritas quedan interrumpidas, reorganizar el texto.</p>
+        <div class="citation-neutral" style="margin:0">
+          <div class="citation-text">"¡No uses negritas para párrafos completos! Si todo es importante, entonces nada es importante, básicamente porque la importancia es relativa."</div>
+          <div class="citation-source">Parnofiello — Cap. X</div>
+        </div>
+      </div>
+      <div>
+        <div class="block-sub">Gerundios</div>
+        <p class="body">Evitarlos ante la duda. Solo corresponden cuando la acción verdaderamente está ocurriendo en ese momento. Los estados de sistema son la excepción válida ("Cargando...", "Procesando...").</p>
+        <table class="ba">
+          <tbody><tr><th>✗ Gerundio innecesario</th><th>✓ Alternativa</th></tr>
+          <tr><td>Estás viendo tus resultados.</td><td>Estos son tus resultados.</td></tr>
+          <tr><td>Guardando los cambios...</td><td>✓ Válido: la acción ocurre ahora</td></tr>
+        </tbody></table>
+      </div>
+      <div>
+        <div class="block-sub">Mayúsculas</div>
+        <p class="body">Solo según las normas de la RAE: nombres propios, siglas, inicio de oración. Las mayúsculas sostenidas son más difíciles de leer y los lectores de pantalla las interpretan como siglas.</p>
+        <table class="ba">
+          <tbody><tr><th>✗ Evitar</th><th>✓ Correcto</th></tr>
+          <tr><td>GUARDAR CAMBIOS</td><td>Guardar cambios</td></tr>
+          <tr><td>Ver Resultados</td><td>Ver resultados</td></tr>
+        </tbody></table>
+      </div>
+      <div>
+        <div class="block-sub">Fragmentación — Ley de Miller</div>
+        <p class="body">Las personas tendemos a recordar entre 5 y 9 <em>chunks</em> de información. Presentar el contenido en unidades organizadas ayuda a comprender y recordar.</p>
+        <div class="citation-neutral" style="margin:0">
+          <div class="citation-text">"Presentar el contenido en unidades organizadas ayuda a los usuarios a comprender y recordar."</div>
+          <div class="citation-source">Kate Moran / NN Group (2016), analizando la Ley de Miller — citado en Parnofiello, Cap. X</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="sec-title">Before / After</h2>
+    <p class="sec-sub">Los errores más frecuentes en productos SaaS en español y cómo corregirlos.</p>
+    <table class="ba">
+      <tbody><tr><th>✗ Antes</th><th>✓ Después</th></tr>
+      <tr><td>No hay evaluaciones disponibles.</td><td>Todavía no creaste ninguna evaluación.</td></tr>
+      <tr><td>Aceptar</td><td>Guardar evaluación</td></tr>
+      <tr><td>Se produjo un error. Por favor intente nuevamente.</td><td>No pudimos guardar. Revisá tu conexión e intentá de nuevo.</td></tr>
+      <tr><td>Buscar...</td><td>Buscar por nombre o área</td></tr>
+      <tr><td>¿Está seguro de que desea continuar?</td><td>¿Eliminar este objetivo? Esta acción no se puede deshacer.</td></tr>
+      <tr><td>La operación fue completada exitosamente.</td><td>Cambios guardados.</td></tr>
+      <tr><td>Funcionalidad avanzada de configuración del sistema.</td><td>Definí los permisos de acceso para este contenido.</td></tr>
+      <tr><td>Por favor ingrese su nombre completo</td><td>Nombre completo</td></tr>
+      <tr><td>Ha comprado con éxito.</td><td>¡Compraste!</td></tr>
+      <tr><td>La sesión ha expirado.</td><td>Cerramos tu sesión por seguridad.</td></tr>
+      <tr><td>No se encontraron resultados para su búsqueda.</td><td>No encontramos resultados para esa búsqueda. Probá con otros términos.</td></tr>
+      <tr><td>Haga clic aquí para ver más información.</td><td>Ver detalles del objetivo →</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="card">
+    <h2 class="sec-title">Checklist de entrega</h2>
+    <p class="sec-sub">Revisá esta lista antes de pasar cualquier copy a diseño o desarrollo. Extraído del cierre del libro.</p>
+    <ul class="chk">
+      <li><div class="chk-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#213478" stroke-width="1.5" stroke-linecap="round"></path></svg></div><div><div class="chk-lbl">Recortá al menos el 50%</div><div class="chk-desc">Del texto que pensaste originalmente. Nielsen recomienda esta reducción para mejorar la usabilidad.</div></div></li>
+      <li><div class="chk-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#213478" stroke-width="1.5" stroke-linecap="round"></path></svg></div><div><div class="chk-lbl">Negritas en conceptos completos</div><div class="chk-desc">Nunca en palabras sueltas, nunca en párrafos enteros. Si la negrita queda interrumpida, reorganizar el texto.</div></div></li>
+      <li><div class="chk-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#213478" stroke-width="1.5" stroke-linecap="round"></path></svg></div><div><div class="chk-lbl">Mayúsculas según RAE</div><div class="chk-desc">Solo nombres propios, siglas e inicio de oración. Nunca para dar énfasis.</div></div></li>
+      <li><div class="chk-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#213478" stroke-width="1.5" stroke-linecap="round"></path></svg></div><div><div class="chk-lbl">Listados vs. enumeraciones</div><div class="chk-desc">Bullets para elementos sin orden lógico. Números para pasos con secuencia obligatoria.</div></div></li>
+      <li><div class="chk-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#213478" stroke-width="1.5" stroke-linecap="round"></path></svg></div><div><div class="chk-lbl">Enlaces predictivos</div><div class="chk-desc">El usuario sabe adónde va antes de hacer clic. Nunca "clic aquí", "leer más" ni "conocé más".</div></div></li>
+      <li><div class="chk-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#213478" stroke-width="1.5" stroke-linecap="round"></path></svg></div><div><div class="chk-lbl">Jerarquía de la información</div><div class="chk-desc">Lo más importante al principio y a la izquierda. CTA siempre al final de la pantalla.</div></div></li>
+      <li><div class="chk-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#213478" stroke-width="1.5" stroke-linecap="round"></path></svg></div><div><div class="chk-lbl">Un objetivo claro por pantalla</div><div class="chk-desc">Cada texto impulsa una acción concreta. Si todo es importante, nada es importante.</div></div></li>
+      <li><div class="chk-ico"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#213478" stroke-width="1.5" stroke-linecap="round"></path></svg></div><div><div class="chk-lbl">Revisión de estilo antes de producción</div><div class="chk-desc">Ortografía, puntuación, tildes y concordancia. El grado cero de la escritura para interfaces digitales es la buena escritura.</div></div></li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- TAB 5: FRAMEWORK -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div id="t5" class="tab-panel active">
+
+  <div class="card">
+    <h2 class="sec-title">Content-First</h2>
+    <p class="sec-sub">En los mercados tecnológicos más maduros, el diseño de las experiencias comienza a pensarse desde la historia que se está contando, no desde los componentes visuales.</p>
+    <div class="citation">
+      <div class="citation-text">"Content-First es una tendencia según la cual el diseño de las experiencias, es decir, la anticipación de las prácticas, comienza a pensarse desde la historia que estamos contando. Podríamos armar croquis o prototipos en papel solo prestando atención a los contenidos y a la jerarquía de cada pantalla de un flujo."</div>
+      <div class="citation-source">Parnofiello — Cap. IX · El contenido, primero</div>
+    </div>
+    <div class="g2" style="margin-top:var(--sp5)">
+      <div class="card-flat" style="border-left:3px solid var(--error-700)">
+        <div class="block-sub" style="color:var(--error-700)">✗ Sin Content-First</div>
+        <p class="body" style="margin:0">El copy va al final. El componente ya tiene forma. El texto se adapta a algo que no fue diseñado para él. Un carrusel pensado para 3 ofertas termina con 3 misiones de la empresa.</p>
+      </div>
+      <div class="card-flat" style="border-left:3px solid var(--success-700)">
+        <div class="block-sub" style="color:var(--success-700)">✓ Con Content-First</div>
+        <p class="body" style="margin:0">Primero: qué se dice, con qué jerarquía y cuál es el CTA. Después: el contenedor visual. El diseño sirve al mensaje, no al revés. Se ahorra retrabajo y se evita el problema de "llenar plantillas".</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="sec-title">El brief de contenido</h2>
+    <p class="sec-sub">Antes de escribir una sola palabra, hay que entender el problema. El brief es el documento que fuerza esa comprensión. No es burocracia: es la diferencia entre escribir con dirección y escribir a ciegas.</p>
+
+    <div class="citation">
+      <div class="citation-text">"El brief es el documento breve en el que determino el problema que se intenta resolver, a quién le pasa, cuándo, desde qué canales de comunicación se va a abordar y cómo se va a hacer. Nada es más urgente e importante que entender el objetivo de lo que escribimos."</div>
+      <div class="citation-source">Parnofiello — Cap. VI · El brief</div>
+    </div>
+
+    <p class="body" style="margin-top:var(--sp4)">Beneficios del brief: aclara los requerimientos antes de empezar, alinea las expectativas entre áreas, organiza la información según importancia relativa, sirve como documentación a futuro y obliga a pensar antes de escribir.</p>
+
+    <div class="brief-wrap" style="margin-top:var(--sp5)">
+      <div class="brief-row">
+        <div class="brief-key">What<span>¿qué pasa?</span></div>
+        <div class="brief-val">El problema de fondo, no el requerimiento superficial. ¿Qué no funciona? ¿Qué necesita el usuario? Llegar lo más atrás posible para entender la lógica del problema. Problema y contexto completo.</div>
+      </div>
+      <div class="brief-row">
+        <div class="brief-key">Why<span>¿por qué?</span></div>
+        <div class="brief-val">El objetivo de negocio y el objetivo del usuario. Definir el resultado final que se persigue. Si no está claro, no se puede escribir con dirección.</div>
+      </div>
+      <div class="brief-row">
+        <div class="brief-key">Who<span>¿a quién?</span></div>
+        <div class="brief-val">El usuario específico que va a ver este texto. ¿Es un admin o un colaborador? ¿En qué momento del flujo está? ¿Cuál es su estado emocional probable? Identificar al usuario que va a beneficiarse con la mejora.</div>
+      </div>
+      <div class="brief-row">
+        <div class="brief-key">When<span>¿cuándo?</span></div>
+        <div class="brief-val">Fecha de entrega a diseño, fecha de lanzamiento, fecha de baja. Comunicaciones simultáneas que podrían superponerse con esta tarea.</div>
+      </div>
+      <div class="brief-row">
+        <div class="brief-key">Where<span>¿dónde?</span></div>
+        <div class="brief-val">Todos los puntos de la interfaz afectados: pantallas, notificaciones, emails, tooltips relacionados. Ninguna tarea es una isla. Lo que se está haciendo impacta en otras tareas.</div>
+      </div>
+      <div class="brief-row how">
+        <div class="brief-key">How<span>propuesta</span></div>
+        <div class="brief-val">Recién acá se escribe. Con todo lo anterior claro, producir al menos 2 o 3 versiones de cada pieza. Documentar: objetivo del usuario, CTA, puntos de dolor (pain dots), situación inicial y notas de tono.</div>
+      </div>
+    </div>
+
+    <div class="citation-neutral" style="margin-top:var(--sp5)">
+      <div class="citation-text">"El brief es un documento vivo al que hay que volver cada vez que el objetivo de la tarea cambia. Si alguna vez te enfrentás a la tarea de escribir los textos finales y no te sale, ¡volvé al brief! Cuando el problema de base está bien entendido, suele ser mucho más fácil encontrar maneras de comunicar lo que queremos. Mente clara, escribe con claridad. Mente confundida, no encuentra nunca las palabras adecuadas."</div>
+      <div class="citation-source">Parnofiello — Cap. VI · Las propuestas de contenido</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="sec-title">La guía de estilo de contenidos</h2>
+    <p class="sec-sub">Así como las áreas de diseño visual arman sus guías de estilo, los equipos de UX Writing necesitan documentar sus propias reglas y convenciones. Es lo que permite escalar la consistencia.</p>
+
+    <div class="citation">
+      <div class="citation-text">"Es importante que los equipos de UXWers trabajen en sus guías. Habrá una parte vinculada a los vocabularios controlados, a las normas de estilo, a los formatos de datos y a los componentes. La guía de estilo de escritura y la guía de estilo de componentes visuales deberían documentar todos los aspectos en un mismo lugar."</div>
+      <div class="citation-source">Parnofiello — Cap. XIV · Componentes UI</div>
+    </div>
+
+    <div class="g2" style="margin-top:var(--sp5)">
+      <div class="card-flat">
+        <div class="block-sub">Vocabulario controlado</div>
+        <p class="body" style="margin:0;font-size:13px">Qué palabras se usan para mencionar cada concepto en Humand y cuáles se evitan. Garantiza que el producto hable siempre con los mismos términos.</p>
+      </div>
+      <div class="card-flat">
+        <div class="block-sub">Normas de estilo</div>
+        <p class="body" style="margin:0;font-size:13px">Buenas prácticas de escritura específicas del producto: tratamiento, tono por módulo, uso del español neutro LATAM.</p>
+      </div>
+      <div class="card-flat">
+        <div class="block-sub">Formatos de datos</div>
+        <p class="body" style="margin:0;font-size:13px">Cómo se escriben fechas, horas, monedas, porcentajes y números de teléfono. Ej: "12 de marzo de 2025" vs "12/03/2025".</p>
+      </div>
+      <div class="card-flat">
+        <div class="block-sub">Componentes documentados</div>
+        <p class="body" style="margin:0;font-size:13px">Cómo se escribe en cada tipo de componente UI: diálogos, tooltips, notificaciones, onboarding, empty states, errores.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="sec-title">Accesibilidad desde el contenido</h2>
+    <p class="sec-sub">La accesibilidad no es un nice-to-have: es diseño universal. La escritura clara y bien estructurada es su fundamento.</p>
+
+    <div class="citation">
+      <div class="citation-text">"La accesibilidad busca hacer un producto (o servicio) único que le sirva a todo el mundo. El trabajo de los contenidistas es de importancia fundamental para hacer una web más accesible. Todos los elementos de escritura web que vimos antes son los fundamentos básicos del llamado plain language."</div>
+      <div class="citation-source">Manuel Razzari — UTN, citado en Parnofiello, Cap. XV · Accesibilidad web y escritura</div>
+    </div>
+
+    <div style="margin-top:var(--sp5)">
+      <div class="acc-rule">
+        <div class="acc-num">1</div>
+        <div><div class="acc-ttl">Escribir bien, siempre</div><div class="acc-desc">Escritura clara, simple, útil con buena jerarquía de la información. El lenguaje simple (plain language) es el piso mínimo de la accesibilidad desde los contenidos.</div></div>
+      </div>
+      <div class="acc-rule">
+        <div class="acc-num">2</div>
+        <div><div class="acc-ttl">Especificar alternativas textuales (atributo ALT)</div><div class="acc-desc">Toda imagen debe tener un texto alternativo breve y concreto que describe qué hay en ella. No es el epígrafe: es la descripción funcional para lectores de pantalla. El UX Writer lo define; el desarrollador lo implementa.</div></div>
+      </div>
+      <div class="acc-rule">
+        <div class="acc-num">3</div>
+        <div><div class="acc-ttl">No descansar en los colores</div><div class="acc-desc">El 8% de los hombres y el 0,5% de las mujeres tienen algún grado de daltonismo. Nunca usar el color como único indicador de estado. Si un campo obligatorio es rojo, también debe haber un indicador textual.</div></div>
+      </div>
+      <div class="acc-rule">
+        <div class="acc-num">4</div>
+        <div><div class="acc-ttl">No usar textos direccionales</div><div class="acc-desc">"El menú de la derecha", "el botón de arriba". En navegadores de voz no existe derecha ni izquierda. Los textos deben ser autocontenidos y funcionar sin referencia visual.</div></div>
+      </div>
+      <div class="acc-rule">
+        <div class="acc-num">5</div>
+        <div><div class="acc-ttl">Escribir enlaces predictivos</div><div class="acc-desc">Jamás "clic aquí". El usuario tiene que saber adónde va antes de hacer clic. Los enlaces no deben abrir ventanas nuevas sin advertirlo, porque sacan al usuario del contexto sin que sepa adónde fue llevado.</div></div>
+      </div>
+    </div>
+
+    <div class="callout c-brand" style="margin-top:var(--sp5)">
+      <span class="c-icon">📋</span>
+      <div>Referencia estándar: <strong>WCAG 2.1</strong> — <a href="https://www.w3.org/" target="_blank">w3.org</a>. Niveles A, AA y AAA. Los productos de empresas privadas que prestan servicios públicos deben cumplir nivel AA como mínimo en varios países de LATAM.</div>
+    </div>
+  </div>
+
+  <!-- BIBLIOGRAFÍA -->
+  <div class="card">
+    <h2 class="sec-title">Bibliografía y fuentes</h2>
+    <p class="sec-sub">Referencias utilizadas para construir este documento.</p>
+    <ul class="rlist">
+      <li><strong>Parnofiello, M.</strong> (2020). <em>UX Writing en español: El ABC de la disciplina con Ñ.</em> IntuitivaUX. — Fuente principal del documento.</li>
+      <li><strong>Nielsen, J. &amp; Norman, D.</strong> Nielsen Norman Group. Tone of Voice User Study; Heurísticas de usabilidad (1994). <a href="https://www.nngroup.com/" target="_blank">nngroup.com</a></li>
+      <li><strong>Krug, S.</strong> (2014). <em>Don't Make Me Think, Revisited.</em> New Riders. — Principios "Happy talk must die" e "Instructions must die".</li>
+      <li><strong>Miller, G. A.</strong> (1956). "The magical number seven, plus or minus two." <em>Psychological Review.</em> — Base de la Ley de Miller y fragmentación de contenido.</li>
+      <li><strong>Moran, K.</strong> (2016). "How chunking helps content processing." Nielsen Norman Group. — Aplicación de la Ley de Miller a UX.</li>
+      <li><strong>W3C.</strong> Web Content Accessibility Guidelines (WCAG) 2.1. <a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank">w3.org/WAI</a></li>
+      <li><strong>Razzari, M.</strong> Diplomatura en Usabilidad y Accesibilidad Web — UTN Argentina. Citado en Parnofiello (2020).</li>
+    </ul>
+  </div>
+
+</div>
+
+</div>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+
+</body></html>
